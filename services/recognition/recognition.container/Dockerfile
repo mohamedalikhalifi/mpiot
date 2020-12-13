@@ -1,4 +1,4 @@
-FROM        mohaseeb/raspberrypi3-python-opencv
+FROM        balenalib/raspberry-pi:stretch
 
 RUN         apt-get -y update
 
@@ -6,7 +6,7 @@ RUN         apt-get -y upgrade
 
 COPY        dependencies.txt /
 
-RUN         xargs -a dependencies.txt apt-get install -y --force-yes
+RUN         xargs -a dependencies.txt apt-get install -y
 
 ENV         PATH="/usr/bin/cmake/bin:${PATH}"
       

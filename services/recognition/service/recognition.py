@@ -1,5 +1,5 @@
 # USAGE
-# python pi_face_recognition.py --cascade haarcascade_frontalface_default.xml --encodings encodings.pickle
+# python recognition.py --cascade haarcascade_frontalface_default.xml --encodings encodings.pickle
 
 # import the necessary packages
 from imutils.video import VideoStream
@@ -100,8 +100,8 @@ while True:
 		cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
 			0.75, (0, 255, 0), 2)
 
-	# display the image to our screen
-	cv2.imshow("Frame", frame)
+	# write the image to the stream
+	cv2.imwrite("/shared/stream.jpg", frame)
 	key = cv2.waitKey(1) & 0xFF
 
 	# if the `q` key was pressed, break from the loop

@@ -17,11 +17,7 @@ WORKDIR     /service
 COPY        requirements.txt /service/
 
 RUN         apt install python3-pip
+
 RUN         pip3 install --upgrade pip
+
 RUN         pip3 install -r requirements.txt --extra-index-url https://www.piwheels.org/simple
-
-# COPY        haarcascade_frontalface_default.xml /service/
-
-# COPY        *.py /service/
-
-# ENTRYPOINT  ["python3","recognition.py"]
