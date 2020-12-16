@@ -1,0 +1,2 @@
+Here resides the message bus used to communicate between the different micro-services
+chosen redis
