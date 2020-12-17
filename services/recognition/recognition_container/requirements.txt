@@ -1,7 +1,7 @@
 setuptools
-dlib
+dlib==19.21.1
 face-recognition
 imutils
-opencv-contrib-python-headless==4.1.0.25
+opencv-contrib-python-headless
 picamera
 redis

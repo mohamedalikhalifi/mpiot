@@ -1,0 +1,27 @@
+version: '3.6'
+services:
+  recognition:
+    build:
+      context: ./recognition/recognition_container
+    depends_on:
+      - messenger
+    environment:
+      - MESSENGER_HOST=messenger
+      - MESSENGER_PORT=6379
+      - LD_LIBRARY_PATH=/opt/vc/lib
+    devices:
+      - "/dev/vcsm:/dev/vcsm"
+      - "/dev/vchiq:/dev/vchiq"
+      - "/dev/video0:/dev/video0"
+    volumes:
+      - /opt/vc:/opt/vc
+      - ./shared:/shared
+    entrypoint: ["python", "/service/recognition.py", "--cascade", "/service/haarcascade_frontalface_default.xml", "--encodings","/service/encodings.pickle"]      
+  messenger:
+    image: arm32v7/redis
+    ports: 
+      - "6379:6379"
+    volumes:
+      - messenger_data:/data
+volumes:
+  messenger_data:

@@ -1,4 +1,4 @@
-FROM        balenalib/raspberry-pi:stretch
+FROM        arm32v7/python
 
 RUN         apt-get -y update
 

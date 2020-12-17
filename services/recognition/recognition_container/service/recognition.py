@@ -11,6 +11,8 @@ import imutils
 import pickle
 import time
 import cv2
+import redis
+import os
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -28,12 +30,14 @@ detector = cv2.CascadeClassifier(args["cascade"])
 
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
-#vs = VideoStream(src=0).start()
 vs = VideoStream(usePiCamera=True).start()
 time.sleep(2.0)
 
 # start the FPS counter
 fps = FPS().start()
+
+#connect to the message bus
+messenger = redis.Redis(host=os.environ['MESSENGER_HOST'], port=os.environ['MESSENGER_PORT'])
 
 # loop over frames from the video file stream
 while True:
@@ -102,11 +106,7 @@ while True:
 
 	# write the image to the stream
 	cv2.imwrite("/shared/stream.jpg", frame)
-	key = cv2.waitKey(1) & 0xFF
-
-	# if the `q` key was pressed, break from the loop
-	if key == ord("q"):
-		break
+	messenger.publish('stream', 'Test')
 
 	# update the FPS counter
 	fps.update()
