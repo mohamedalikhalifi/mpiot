@@ -1,23 +1,27 @@
-FROM        arm32v7/python
+FROM        arm32v7/python:3.7-buster
+
+ENV         MESSENGER_HOST localhost
+
+ENV         MESSENGER_PORT 6379
+
+ENV         PATH="/usr/bin/cmake/bin:${PATH}"
+
+COPY        dependencies.txt /
+
+COPY        requirements.txt /
 
 RUN         apt-get -y update
 
 RUN         apt-get -y upgrade
-
-COPY        dependencies.txt /
-
-RUN         xargs -a dependencies.txt apt-get install -y
-
-ENV         PATH="/usr/bin/cmake/bin:${PATH}"
       
-RUN         rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+RUN         pip install --upgrade pip 
 
-WORKDIR     /service
+RUN         pip install --extra-index-url https://www.piwheels.org/simple -r requirements.txt
 
-COPY        requirements.txt /service/
+RUN         apt-get install -y 
 
-RUN         apt install python3-pip
+RUN         xargs -a dependencies.txt apt-get -f install -y --fix-missing
 
-RUN         pip3 install --upgrade pip
+COPY        entrypoint.sh /
 
-RUN         pip3 install -r requirements.txt --extra-index-url https://www.piwheels.org/simple
+ENTRYPOINT [ "bash", "./entrypoint.sh" ]

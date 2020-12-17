@@ -16,12 +16,25 @@ services:
     volumes:
       - /opt/vc:/opt/vc
       - ./shared:/shared
-    entrypoint: ["python", "/service/recognition.py", "--cascade", "/service/haarcascade_frontalface_default.xml", "--encodings","/service/encodings.pickle"]      
+      - ./recognition/recognition_container/service:/service
   messenger:
     image: arm32v7/redis
     ports: 
       - "6379:6379"
     volumes:
       - messenger_data:/data
+  streaming:
+    build:
+      context: ./streaming/streaming.container
+    depends_on:
+      - messenger
+    environment:
+      - MESSENGER_HOST=messenger
+      - MESSENGER_PORT=6379
+    volumes:
+      - ./shared:/shared
+      - ./streaming/service:/service
+      
 volumes:
+  shared: 
   messenger_data:

@@ -22,4 +22,6 @@ RUN         apt-get install -y
 
 RUN         xargs -a dependencies.txt apt-get -f install -y --fix-missing
 
-COPY        service /service
+COPY        entrypoint.sh /
+
+ENTRYPOINT [ "bash", "./entrypoint.sh" ]
