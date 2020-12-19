@@ -94,6 +94,7 @@ while True:
 		
 		# update the list of names
 		names.append(name)
+		messenger.publish('AccessRequest', str(names))
 
 	# loop over the recognized faces
 	for ((top, right, bottom, left), name) in zip(boxes, names):
@@ -106,8 +107,6 @@ while True:
 
 	# write the image to the stream
 	cv2.imwrite("/shared/stream.jpg", frame)
-	messenger.publish('stream', 'Test')
-
 	# update the FPS counter
 	fps.update()
 
