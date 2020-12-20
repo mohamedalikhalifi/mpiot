@@ -4,6 +4,10 @@ ENV         MESSENGER_HOST localhost
 
 ENV         MESSENGER_PORT 6379
 
+ENV         MQTT_BROKER localhost
+
+ENV         MQTT_PORT 1883 
+
 ENV         PATH="/usr/bin/cmake/bin:${PATH}"
 
 COPY        dependencies.txt /

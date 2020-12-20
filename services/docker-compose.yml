@@ -28,6 +28,7 @@ services:
       context: ./streaming/streaming.container
     depends_on:
       - messenger
+      - recognition
     ports: 
       - "8000:8000"
     environment:
@@ -35,7 +36,20 @@ services:
       - MESSENGER_PORT=6379
     volumes:
       - ./shared:/shared
-      - ./streaming/service:/service
+      - ./streaming/service:/service 
+  publishing:
+    build:
+      context: ./publishing/publishing.container
+    depends_on:
+      - messenger
+      - recognition
+    ports: 
+    environment:
+      - MQTT_BROKER=192.168.0.80
+      - MQTT_PORT=1883
+    volumes:
+      - ./shared:/shared
+      - ./publishing/service:/service
       
 volumes:
   messenger_data:
