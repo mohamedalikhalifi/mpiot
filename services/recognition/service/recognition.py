@@ -13,6 +13,7 @@ import time
 import cv2
 import redis
 import os
+import json
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -92,9 +93,9 @@ while True:
 			# will select first entry in the dictionary)
 			name = max(counts, key=counts.get)
 		
+		messenger.publish("AccessRequest", str(name))
 		# update the list of names
 		names.append(name)
-		messenger.publish('AccessRequest', str(names))
 
 	# loop over the recognized faces
 	for ((top, right, bottom, left), name) in zip(boxes, names):
