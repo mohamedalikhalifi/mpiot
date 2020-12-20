@@ -1,5 +1,10 @@
 # Using official python runtime base image
-FROM python:3.7-buster
+FROM arm32v7/python:3.7-buster
+
+
+ENV         MESSENGER_HOST localhost
+
+ENV         MESSENGER_PORT 6379
 
 # Set the application directory
 WORKDIR /app
