@@ -28,4 +28,4 @@ RUN         xargs -a dependencies.txt apt-get -f install -y --fix-missing
 
 COPY        entrypoint.sh /
 
-#ENTRYPOINT [ "bash", "./entrypoint.sh" ]
+ENTRYPOINT [ "bash", "./entrypoint.sh" ]
