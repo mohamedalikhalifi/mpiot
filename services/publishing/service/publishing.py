@@ -2,7 +2,7 @@ import os
 from time import sleep
 import paho.mqtt.client  as mqtt
 import redis
-import services.publishing.service.watchdog as Watchdog
+from watchdog import *
 
 watchdog = None
 mqttClient = None
@@ -56,7 +56,7 @@ def listen_and_foreward():
             mqttClient.publish("AccessRequested", newRequester)
             mqttClient.publish("SessionAccessRequestCount", str(sessionRequestCounter))
             old_requester = newRequester
-    watchdog.reset()
+        watchdog.reset()
 
 try:
     init_publishing()
