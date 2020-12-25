@@ -18,7 +18,8 @@ def init_publishing():
     broker = os.environ['MQTT_BROKER']
     port = int(os.environ['MQTT_PORT'])
     print("Connecting to " + broker + ":" + str(port))
-    mqttClient.connect(broker, port, 60)
+    mqttClient.connect(broker, port, keepalive=60)
+    mqttClient.loop_start()
     print("Connected to " + broker + ":" + str(port))
 
     #connect to message bus
@@ -41,14 +42,15 @@ def listen_and_foreward():
     global messageBus
     global watchdog
     # launch watchdog timer to flush the old requester buffer on inactivity
-    watchdog = Watchdog(20, flush_old_requester)
+    watchdog = Watchdog(10, flush_old_requester)
 
     # send MQTT publication on new access request
     sessionRequestCounter = 0
     for message in messageBus.listen():
+        watchdog.reset()
         newRequester = message["data"]
         # exclude empty message
-        if (newRequester == '1' ):
+        if (newRequester == 1 ):
             continue
         # Notify on new Access request
         if (old_requester != newRequester):
@@ -56,7 +58,6 @@ def listen_and_foreward():
             mqttClient.publish("AccessRequested", newRequester)
             mqttClient.publish("SessionAccessRequestCount", str(sessionRequestCounter))
             old_requester = newRequester
-        watchdog.reset()
 
 try:
     init_publishing()
