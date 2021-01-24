@@ -26,7 +26,11 @@ args = vars(ap.parse_args())
 # load the known faces and embeddings along with OpenCV's Haar
 # cascade for face detection
 print("[INFO] loading encodings + face detector...")
-data = pickle.loads(open(args["encodings"], "rb").read())
+fs = open(args["encodings"], "rb")
+data = pickle.loads(fs.read())
+fs.close()
+
+
 detector = cv2.CascadeClassifier(args["cascade"])
 
 # initialize the video stream and allow the camera sensor to warm up
