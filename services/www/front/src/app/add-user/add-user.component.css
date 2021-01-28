@@ -1,0 +1,33 @@
+:host{
+  display: block;
+  margin-top: 2rem;
+}
+
+input {
+  min-height: 20px;
+  height: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+mat-slide-toggle {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+mat-spinner {
+margin:auto;
+}
+
+input[type="file"]{
+  visibility: hidden;
+}
+
+.image-preview{
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img{
+  height: 100%;
+}

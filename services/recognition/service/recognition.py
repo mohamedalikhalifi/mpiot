@@ -26,10 +26,10 @@ args = vars(ap.parse_args())
 # load the known faces and embeddings along with OpenCV's Haar
 # cascade for face detection
 print("[INFO] loading encodings + face detector...")
-fs = open(args["encodings"], "rb")
-data = pickle.loads(fs.read())
-fs.close()
 
+encodings = open(args["encodings"], "rb")
+data = pickle.loads(encodings.read())
+encodings.close()
 
 detector = cv2.CascadeClassifier(args["cascade"])
 

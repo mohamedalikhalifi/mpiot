@@ -1,6 +1,0 @@
-setuptools
-dlib
-face-recognition
-imutils
-opencv-contrib-python-headless==4.1.0.25
-picamera
